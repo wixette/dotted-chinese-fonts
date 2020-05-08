@@ -184,6 +184,23 @@ function ScreenXyToFontXy(x, y, glyphTop) {
 
 
 /**
+ * Draws a square dots.
+ * @param {opentype.Path} path The opentyp path.
+ * @param {number} left The left location of the bound box.
+ * @param {number} top The top location of the bound box.
+ * @param {number} right The left location of the bound box.
+ * @param {number} bottom The left location of the bound box.
+ */
+function drawSquareDots(path, left, top, right, bottom) {
+    path.moveTo(left, top);
+    path.lineTo(left, bottom);
+    path.lineTo(right, bottom);
+    path.lineTo(right, top);
+    path.lineTo(left, top);
+}
+
+
+/**
  * Vectorizes a bitmap glyph.
  * @param {Object} glyphInfo The info of the specified glyph.
  * @return {opentype.Glyph}
@@ -204,21 +221,20 @@ function vectorizeGlyph(glyphInfo) {
 
         for (let x = 0; x < line.length; x++) {
             if (line[x] == BLACK_PIXEL) {
-                const left = xOffset + x * PIXEL_SIZE + PIXEL_PADDING;
-                const top = yOffset + y * PIXEL_SIZE + PIXEL_PADDING;
-                const [fLeft, fTop] = ScreenXyToFontXy(left,
-                                                       top,
-                                                       glyphTop);
-                const right = xOffset + (x + 1) * PIXEL_SIZE - PIXEL_PADDING;
-                const bottom = yOffset + (y + 1) * PIXEL_SIZE - PIXEL_PADDING;
-                const [fRight, fBottom] = ScreenXyToFontXy(right,
-                                                           bottom,
-                                                           glyphTop);
-                path.moveTo(fLeft, fTop);
-                path.lineTo(fLeft, fBottom);
-                path.lineTo(fRight, fBottom);
-                path.lineTo(fRight, fTop);
-                path.lineTo(fLeft, fTop);
+                const x1 = xOffset + x * PIXEL_SIZE + PIXEL_PADDING;
+                const y1 = yOffset + y * PIXEL_SIZE + PIXEL_PADDING;
+                const [left, top] = ScreenXyToFontXy(x1, y1, glyphTop);
+                const x2 = xOffset + (x + 1) * PIXEL_SIZE - PIXEL_PADDING;
+                const y2 = yOffset + (y + 1) * PIXEL_SIZE - PIXEL_PADDING;
+                const [right, bottom] = ScreenXyToFontXy(x2, y2, glyphTop);
+
+                switch (argv.font_style) {
+                case 'square':
+                    drawSquareDots(path, left, top, right, bottom);
+                    break;
+                case 'circle':
+                    break;
+                }
             }
         }
     }
@@ -281,6 +297,7 @@ function convert() {
         console.log();
     }
 
+    console.log('Number of glyphs to be output: ' + glyphs.length);
     console.log('Outputing font glyphs to ' + argv.output);
     const font = new opentype.Font({
         familyName: argv.family_name,
