@@ -6,14 +6,6 @@ const opentype = require('opentype.js');
 const yargs = require('yargs');
 
 
-// Supported font styles.
-const SUPPORTED_FONT_STYLES = ['square', 'circle'];
-const FONT_STYLE_NAMES = {
-    'square': 'Square Regular',
-    'circle': 'Circle Regular'
-};
-
-
 const argv = yargs
       .usage('Usage: $0 [options]')
 
@@ -31,10 +23,14 @@ const argv = yargs
                 'the PCF file.')
       .default('p', 13)
 
-      .alias('s', 'font_style')
-      .choices('s', SUPPORTED_FONT_STYLES)
-      .describe('s', 'Choose the font style.')
+      .alias('s', 'dot_shape')
+      .choices('s', ['square', 'circle', 'triangle'])
+      .describe('s', 'The shape of dots.')
       .default('s', 'square')
+
+      .alias('t', 'font_style')
+      .describe('t', 'The style of the generated font.')
+      .default('t', 'Regular')
 
       .alias('f', 'family_name')
       .describe('f', 'The family name of the generated font.')
@@ -260,7 +256,7 @@ function vectorizeGlyph(glyphInfo) {
                 const y2 = yOffset + (y + 1) * PIXEL_SIZE - PIXEL_PADDING;
                 const [right, bottom] = ScreenXyToFontXy(x2, y2, glyphTop);
 
-                switch (argv.font_style) {
+                switch (argv.dot_shape) {
                 case 'square':
                     drawSquareDot(path, left, top, right, bottom);
                     break;
@@ -334,7 +330,7 @@ function convert() {
     console.log('Outputing font glyphs to ' + argv.output);
     const font = new opentype.Font({
         familyName: argv.family_name,
-        styleName: FONT_STYLE_NAMES[argv.font_style],
+        styleName: argv.font_style,
         designer: argv.font_designer,
         license: argv.font_license,
         version: argv.font_version,
