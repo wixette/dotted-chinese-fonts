@@ -1,15 +1,15 @@
-# Font converter: converts PCF bitmap font to OpenType pixel font.
+# Utility to convert bitmap fonts to OpenType fonts
 
-The released DOTTED fonts are generated with this utility, from Wen
-Quan Yi bitmap fonts, that are licensed under GPL 2.0.
+The released Dotted Chinese Pixel Fonts are generated with this
+utility, based on WenQuanYi bitmap fonts.
 
 So far this utility is not a general-purpose font converter. It has a
-few number of hard-coded parameters to fulfill the characteristics of
-Wen Quan Yi or other Chinese bitmap fonts. This utility might not work
-well for converting other bitmap fonts, unless some metric parameters
-are updated accordingly.
+few hard-coded parameters to fulfill the characteristics of WenQuanYi
+or other Chinese bitmap fonts. It might not work well for converting
+non-Chinese bitmap fonts, unless the metric parameters are updated
+accordingly.
 
-## Install dependencies
+## Install the dependencies
 
 ```
 npm install
@@ -27,20 +27,22 @@ or,
 node pcf2opentype.js --help
 ```
 
-Wen Quan Yi font usually contains over 20K glyphs. It requires a lot
-of system memory to convert all the glyphs at once. Hence you might
-want the following command line option to execute the converter
-explicitly with `node`,
+WenQuanYi font usually covers over 20K Unicode glyphs. It requires
+4~5GB system memory to vectorize all those glyphs. To avoid exceeding
+V8's memory limit, `node.js` has a useful command line option
+`--max-old-space-size`. For example,
 
 ```
 node --max-old-space-size=8192 pcf2opentype.js ...
 ```
 
-## Release the font
+## Release the fonts
 
-This converter uses node.js module opentype.js to generate the
-OpenType font file. The output file could be a bit buggy
-sometimes. Before releasing the font, a font editor software may be
-used to load, clean and regenerate the font. I use FontForge, which
-always does well in fixing trivial issues, as well as in compressing
-the font file.
+The converter uses JavaScript module opentype.js to generate OpenType
+font file. The output file could be a bit buggy sometimes. For solving
+this, we can use font editor software to load, verify, clean and
+regenerate the font file.
+
+I use FontForge to release the generated fonts. FontForge does well in
+verifying and fixing format issues, and making the output file ready
+for Windows, macOS and Linux.
