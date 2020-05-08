@@ -34,6 +34,10 @@ Bitmap Song then transform the glyphs into different styles.
 参考 [converter/](https://github.com/wixette/dotted-chinese-fonts/tree/master/converter)
 中的源代码。该工具自动将文泉驿点阵宋体中的字型矢量化后，变形加工为不同风格的字体。
 
+## Download 字体下载
+
+ * Version 0.1, 2020.05.08: [download](https://raw.githubusercontent.com/wixette/dotted-chinese-fonts/master/release_v_0_1/dotted_songti_v_0_1.zip)
+
 ## Examples 字体样例
 
 <img src="https://raw.githubusercontent.com/wixette/dotted-chinese-fonts/master/images/example2.png">
