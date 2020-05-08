@@ -397,7 +397,7 @@ class PcfParser {
             this.pcf.bitmapTable.bitmapSize;
         bitmapOffset += this.pcf.bitmapTable.bitmapsBaseOffset;
         bitmapEnd += this.pcf.bitmapTable.bitmapsBaseOffset;
-        return this.pcf.rawBuffer.slice(bitmapOffset, bitmapEnd);
+        return this.rawBuffer.slice(bitmapOffset, bitmapEnd);
     }
 };
 
