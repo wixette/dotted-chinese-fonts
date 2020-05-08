@@ -43,6 +43,10 @@ const argv = yargs
       .describe('e', 'The designer of the generated font.')
       .default('e', 'wixette')
 
+      .alias('c', 'font_copyright')
+      .describe('c', 'The copyright of the generated font.')
+      .default('c', 'Copyright (C) 2020 wixette')
+
       .alias('l', 'font_license')
       .describe('l', 'The license of the generated font.')
       .default('l', 'GPL 2.0')
@@ -347,6 +351,7 @@ function convert() {
     const font = new opentype.Font({
         familyName: argv.family_name,
         styleName: argv.font_style,
+        copyright: argv.font_copyright,
         designer: argv.font_designer,
         license: argv.font_license,
         version: argv.font_version,
