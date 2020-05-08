@@ -179,7 +179,7 @@ function isAcceptedGlyph(glyphCode) {
  * @return {Object} x and y in font coordinate system.
  */
 function ScreenXyToFontXy(x, y, glyphTop) {
-    return [x, glyphTop - y];
+    return [Math.round(x), Math.round(glyphTop - y)];
 }
 
 
@@ -191,12 +191,44 @@ function ScreenXyToFontXy(x, y, glyphTop) {
  * @param {number} right The left location of the bound box.
  * @param {number} bottom The left location of the bound box.
  */
-function drawSquareDots(path, left, top, right, bottom) {
+function drawSquareDot(path, left, top, right, bottom) {
     path.moveTo(left, top);
     path.lineTo(left, bottom);
     path.lineTo(right, bottom);
     path.lineTo(right, top);
     path.lineTo(left, top);
+}
+
+
+/**
+ * Draws a circle dots.
+ * @param {opentype.Path} path The opentyp path.
+ * @param {number} left The left location of the bound box.
+ * @param {number} top The top location of the bound box.
+ * @param {number} right The left location of the bound box.
+ * @param {number} bottom The left location of the bound box.
+ */
+function drawCircleDot(path, left, top, right, bottom) {
+    // Cubic Bézier approximation to a circular arc (1/4 of a full
+    // circle):
+    //
+    //   P_0 = (0,1), P_1 = (c,1), P_2 = (1,c), P_3 = (1,0)
+    //
+    const C = 0.551915024494;
+    const RADIUS = (right - left) / 2;
+    path.moveTo(left + RADIUS, top);
+    path.curveTo(left + RADIUS - RADIUS * C, top,
+                 left, top - RADIUS + RADIUS * C,
+                 left, top - RADIUS);
+    path.curveTo(left, top - RADIUS - RADIUS * C,
+                 left + RADIUS - RADIUS * C, bottom,
+                 left + RADIUS, bottom);
+    path.curveTo(left + RADIUS + RADIUS * C, bottom,
+                 right, top - RADIUS - RADIUS * C,
+                 right, top - RADIUS);
+    path.curveTo(right, top - RADIUS + RADIUS * C,
+                 left + RADIUS + RADIUS * C, top,
+                 left + RADIUS, top);
 }
 
 
@@ -230,9 +262,10 @@ function vectorizeGlyph(glyphInfo) {
 
                 switch (argv.font_style) {
                 case 'square':
-                    drawSquareDots(path, left, top, right, bottom);
+                    drawSquareDot(path, left, top, right, bottom);
                     break;
                 case 'circle':
+                    drawCircleDot(path, left, top, right, bottom);
                     break;
                 }
             }
