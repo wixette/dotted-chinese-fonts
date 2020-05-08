@@ -24,7 +24,7 @@ const argv = yargs
       .default('p', 13)
 
       .alias('s', 'dot_shape')
-      .choices('s', ['square', 'circle', 'triangle'])
+      .choices('s', ['square', 'circle', 'diamond'])
       .describe('s', 'The shape of dots.')
       .default('s', 'square')
 
@@ -180,7 +180,7 @@ function ScreenXyToFontXy(x, y, glyphTop) {
 
 
 /**
- * Draws a square dots.
+ * Draws a square dot.
  * @param {opentype.Path} path The opentyp path.
  * @param {number} left The left location of the bound box.
  * @param {number} top The top location of the bound box.
@@ -195,9 +195,25 @@ function drawSquareDot(path, left, top, right, bottom) {
     path.lineTo(left, top);
 }
 
+/**
+ * Draws a diamond dot.
+ * @param {opentype.Path} path The opentyp path.
+ * @param {number} left The left location of the bound box.
+ * @param {number} top The top location of the bound box.
+ * @param {number} right The left location of the bound box.
+ * @param {number} bottom The left location of the bound box.
+ */
+function drawDiamondDot(path, left, top, right, bottom) {
+    const RADIUS = (right - left) / 2;
+    path.moveTo(left + RADIUS, top);
+    path.lineTo(left, top - RADIUS);
+    path.lineTo(left + RADIUS, bottom);
+    path.lineTo(right, top - RADIUS);
+    path.lineTo(left + RADIUS, top);
+}
 
 /**
- * Draws a circle dots.
+ * Draws a circle dot.
  * @param {opentype.Path} path The opentyp path.
  * @param {number} left The left location of the bound box.
  * @param {number} top The top location of the bound box.
@@ -206,11 +222,8 @@ function drawSquareDot(path, left, top, right, bottom) {
  */
 function drawCircleDot(path, left, top, right, bottom) {
     // Cubic Bézier approximation to a circular arc (1/4 of a full
-    // circle):
-    //
-    //   P_0 = (0,1), P_1 = (c,1), P_2 = (1,c), P_3 = (1,0)
-    //
-    const C = 0.551915024494;
+    // circle): P0 = (0,1), P1 = (c,1), P2 = (1,c), P3 = (1,0)
+    const C = 0.551915;
     const RADIUS = (right - left) / 2;
     path.moveTo(left + RADIUS, top);
     path.curveTo(left + RADIUS - RADIUS * C, top,
@@ -262,6 +275,9 @@ function vectorizeGlyph(glyphInfo) {
                     break;
                 case 'circle':
                     drawCircleDot(path, left, top, right, bottom);
+                    break;
+                case 'diamond':
+                    drawDiamondDot(path, left, top, right, bottom);
                     break;
                 }
             }
