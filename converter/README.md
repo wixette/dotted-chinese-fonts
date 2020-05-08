@@ -17,16 +17,14 @@ npm install
 
 ## Usage
 
-Try
-
 ```
-./converter.js --help
+./pcf2opentype.js --help
 ```
 
 or,
 
 ```
-node converter.js --help
+node pcf2opentype.js --help
 ```
 
 Wen Quan Yi font usually contains over 20K glyphs. It requires a lot
@@ -35,5 +33,5 @@ want the following command line option to execute the converter
 explicitly with `node`,
 
 ```
-node --max-old-space-size=8192 converter.js ...
+node --max-old-space-size=8192 pcf2opentype.js ...
 ```
