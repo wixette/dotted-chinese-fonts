@@ -38,3 +38,11 @@ styles.
 
  * [Version 0.1, 2020.05.08](https://github.com/wixette/dotted-chinese-fonts/tree/master/release/v_0_1)
 
+## Examples 字体样例
+
+<img src="https://raw.githubusercontent.com/wixette/dotted-chinese-fonts/master/images/example3.png">
+
+<img src="https://raw.githubusercontent.com/wixette/dotted-chinese-fonts/master/images/example4.png">
+
+<img src="https://raw.githubusercontent.com/wixette/dotted-chinese-fonts/master/images/example5.png">
+
