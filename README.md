@@ -1,4 +1,4 @@
-# Dotted Chinese Pixel Fonts 点点中文像素字体
+# Dotted Chinese Pixel Fonts 点点像素 | 开源的中文像素字体
 
 ## About 关于
 
