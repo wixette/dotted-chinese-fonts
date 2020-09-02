@@ -3,7 +3,7 @@
 ## About 关于
 
 Dotted Chinese Pixel is a set of open source Chinese pixel-art fonts
-released under GPL 2.0. More that 22,000 Unicode glyphs are supported,
+released under GPL 2.0. More than 22,000 Unicode glyphs are supported,
 covering all GBK charset entries.
 
 点点中文像素字体是一组基于 GPL 2.0 协议开源发布的中文像素艺术字体，每
