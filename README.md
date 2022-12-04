@@ -36,7 +36,7 @@ styles.
 
 ## Download 字体下载
 
- * [Version 0.1, 2020.05.08](https://github.com/wixette/dotted-chinese-fonts/tree/master/release/v_0_1)
+- [Version 0.1, 2020.05.08](https://github.com/wixette/dotted-chinese-fonts/releases/tag/v0.1)
 
 ## Examples 字体样例
 
